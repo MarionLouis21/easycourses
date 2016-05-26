@@ -33,10 +33,57 @@ session_start(); // On en a besoin pour utiliser la variable globale SESSION
 				}
 			break;
 
+			case 'Inscription' :
+				mkUser($_POST['nom'], $_POST['prenom'], $_POST['pseudo'], $_POST['passe'], $_POST['idQuestion'], $_POST['rep']);
+				$addArgs = "?view=login";
+			break;
+
 			case 'Deconnexion' :
 				session_destroy();
 				deconnecterUtilisateur(valider("idUser","SESSION"));
 			break;
+
+			function __construct($foo = null)
+			{
+				$this->foo = $foo;
+			}
+
+			case 'Activer' :
+			if ($idListe = valider("idListe")) {
+				reactiverListe($idListe);
+				$addArgs = "?view=listes";
+			}
+			break;
+
+			case 'Archiver' :  
+			if ($idListe = valider("idListe")) {
+				archiverListe($idListe);
+				$addArgs = "?view=listes";
+			}
+			break; 
+			case 'Supprimer' :
+			if ($idListe = valider("idListe")) {
+				supprimerListe($idListe);
+				$addArgs = "?view=listes";
+			}
+			break;
+
+			case 'Creer' :
+				creerListe(valider("nvListe"));
+				$addArgs = "?view=listes";
+			break;
+
+			case 'Poster' : 
+				$User=valider('idUser',"GET");
+				echo($User);
+				$List=valider('idListe',"GET");
+				echo($List);
+				$prod=valider('produitsliste',"GET");
+				echo($List);
+				$SQL="INSERT INTO `produitsliste`(`idListe`, `idAuteur`, `idProduitsCatalogue`) VALUES ($List,$User,\"$produitsliste\")";
+				SQLInsert($SQL);
+				echo("test");
+				$addArgs=("?view=mlist&idListe=".$List);
 		}
 
 	}

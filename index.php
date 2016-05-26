@@ -5,6 +5,7 @@ session_start(); // A mettre dans l'index car l'index est le fichier de base, ç
 
 	include_once "libs/maLibUtils.php"; // On aura plus besoin de les inclure dans header,...,footer
 	include_once("libs/modele.php");
+	include_once "libs/maLibSQL.pdo.php";
 
 	include ("Templates/header.php");
 
@@ -22,6 +23,14 @@ session_start(); // A mettre dans l'index car l'index est le fichier de base, ç
 
 			case 'frigo':
 				include 'Templates/frigo.php';
+			break;
+
+			case 'catalogue':
+				include 'Templates/catalogue.php';
+			break;
+
+			case 'profil':
+				include 'Templates/profil.php';
 			break;
 
 			default :

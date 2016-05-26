@@ -17,7 +17,8 @@ function verifUserBdd($login,$passe) {
 }
 
 function mkUser($nom, $prenom, $pseudo, $passe, $idQuestion, $reponse) {
-	$SQL="INSERT INTO `users`(`nom`, `prenom`, `pseudo`, `passe`, `idQuestion`, `reponse`) VALUES (\"$nom\",\"$prenom\",\"$pseudo\",\"$passe\",$idQuestion,\"$reponse\")";
+
+	$SQL="INSERT INTO `users`(`nom`, `prenom`, `pseudo`, `passe`, `idQuestion`, `reponse`) VALUES (\"". $nom . "\",\"" . $prenom . "\",\"" . $pseudo . "\",\"" . $passe . "\",\"" . (int)$idQuestion . "\",\" ". $reponse . "\");";
 	SQLInsert($SQL);
 	// Cette fonction crée un nouvel utilisateur et renvoie l'identifiant de l'utilisateur créé
 }
@@ -48,7 +49,7 @@ function changerPseudo($idUser,$pseudo) {
 
 function listerQuestions($classe = "both") // Liste les questions lors de l'inscription 
 {
-	$str="SELECT label FROM questions "; 
+	$str="SELECT * FROM questions "; 
 	return parcoursRs(SQLSelect($str));
 }
 
@@ -60,16 +61,24 @@ function listerCategories()
 
 function listerProduits($idCat = 0)
 {
-	$str="SELECT * FROM catalogue WHERE idCategorie=" . (int)$idCat . " ORDER BY nom"; 
+	$str="SELECT * FROM catalogue WHERE idCategorie= " . (int)$idCat . " ORDER BY nom"; 
+	//$str="SELECT * FROM catalogue WHERE idCategorie='$idCat' ORDER BY nom"; 
 	return parcoursRs(SQLSelect($str));
+}
+
+
+function ajouterProduitAuCatalogue($nom,$idCategorie)
+{
+	$SQL="INSERT INTO catalogue (nom,idCategorie) VALUES (\" " . $nom . "\",\"" . $idCategorie . "\");";
+	SQLInsert($SQL);
 }
 
 function listerListes($mode="tout") {
 	// Liste toutes les listes ($mode="tout")
 	// OU uniquement celles actives  ($mode="actives"), ou inactives  ($mode="inactives")
 	$SQL = "SELECT * FROM listes"; 
-	if ($mode=="actives") $SQL .= " WHERE active=1";
-	if ($mode=="inactives") $SQL .= " WHERE active=0";
+	if ($mode=="actives") $SQL .= " WHERE complete=1";
+	if ($mode=="inactives") $SQL .= " WHERE complete=0";
 
 	return parcoursRs(SQLSelect($SQL));
 }
@@ -86,15 +95,15 @@ function reactiverListe($idListe) {
 	SQLUpdate($SQL);
 }
 
-function creerListe($nom) {
+function creerListe($nom, $idAuteur) {
 	// crée une nouvelle liste et renvoie son identifiant
 	$SQL="INSERT INTO `listes`(`nom`, `complete`, `idAuteur`) VALUES ('$nom', '0, $idAuteur)";
 	SQLInsert($SQL);
 }
 
-function supprimerConversation($idConv) {
+function supprimerListe($idListe) {
 	// supprime une liste et ses produits
-	$SQL = "DELETE FROM listes WHERE id='$idList'";
+	$SQL = "DELETE FROM listes WHERE id='$idListe'";
 	SQLDelete($SQL);
 }
 
@@ -105,30 +114,17 @@ function enregistrerProduit($idListe, $idAuteur, $quantite) {
 	return SQLInsert($SQL);
 }
 
-function listerMessages($idConv,$format="asso") {
-	// Liste les messages de cette conversation, au format JSON ou tableau associatif
-	// Champs à extraire : contenu, auteur, couleur 
-	// en ne renvoyant pas les utilisateurs blacklistés
-
-	$SQL = "SELECT message.contenu, users.pseudo, users.couleur FROM message
-					INNER JOIN users ON message.idAuteur = users.id
-					WHERE message.idConversation = $idConv";
+function listerProduitsListe($idListe,$format="asso") {
+	$SQL = "SELECT produitsliste.idProduitscatalogue, users.pseudo FROM produitsliste
+					INNER JOIN users ON listes.idAuteur = users.id
+					WHERE produitsliste.idListe = $idListe";
 	return parcoursRs(SQLSelect($SQL));
 	
 }
 
-function listerMessagesFromIndex($idConv,$index) {
-	// Liste les messages de cette conversation, 
-	// dont l'id est superieur à l'identifiant passé
-	// Champs à extraire : contenu, auteur, couleur 
-	// en ne renvoyant pas les utilisateurs blacklistés
 
-}
-
-function getConversation($idConv) {	
-	// Récupère les données de la conversation (theme, active)
-
-	$SQL = "SELECT theme, active FROM conversations WHERE id='$idConv'";
+function getListe($idList) {	
+	$SQL = "SELECT nom, complete FROM listes WHERE id='$idList'";
 	return parcoursRs(SQLSelect($SQL));
 
 }
