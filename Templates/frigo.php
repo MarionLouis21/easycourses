@@ -30,7 +30,7 @@
 				<?php
 
 					if (isset ($_POST['idCategorie'])) {
-						$produit = listerProduits($_POST['idCategorie']);
+						$produit = listerProduitsFrigo($_POST['idCategorie']);
 
 						echo('<ul id="products">');
 						foreach($produit as $dataProduit) {

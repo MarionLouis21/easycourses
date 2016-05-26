@@ -19,7 +19,7 @@
 			if (valider("connecte","SESSION")) {
 				echo "Utilisateur <b>$_SESSION[pseudo]</b> "; 
 				echo "connecté depuis $_SESSION[heureConnexion]";
-				echo ' <a href="controleur.php?action=Deconnexion">Deconnexion</a>';
+				echo ' <a href="controleur.php?action=Deconnexion">Déconnexion</a>';
 			}
 		?>
 	</footer>

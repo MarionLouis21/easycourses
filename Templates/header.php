@@ -33,14 +33,21 @@
 						<a href="#menu" class="menuToggle"><span>Menu</span></a>
 						<div id="menu">
 							<ul>
-								<li><a href="index.php">Accueil</a></li>
 								<?php
 									if(!valider("connecte", "SESSION")) {			
 										echo "<li><a href='index.php?view=login'>Se connecter</a></li>";
 										echo "<li><a href='index.php?view=inscription'>S'inscrire</a></li>";
+										echo "<li><a href='index.php'>Accueil</a></li>";
+									}
+									if(valider("connecte","SESSION")) {
+										echo "<li><a href='index.php?view=listes'>Mes Listes</a></li>";
+										echo "<li><a href='index.php?view=frigo'>Mon Frigo</a></li>";
+										echo "<li><a href='index.php?view=profil'>Mon Profil</a></li>";
+										echo "<li><a href='index.php?view=catalogue'>Catalogue</a></li>";
+										echo "<li><a href='controleur.php?action=Deconnexion'>Se déconnecter</a></li>";  // Aussi dans le footer
 									}
 								?>			
-								<li><a href="generic.php">Notre ecole</a></li>
+								<li><a href="generic.php">Notre école</a></li>
 							</ul>
 						</div>
 					</li>

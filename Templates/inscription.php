@@ -18,39 +18,37 @@
 		<section class="wrapper style5">
 			<div class="inner">
 				<h4>Inscription</h4>
-				<form method="inscription" action="#">
+				<form method="post" action="controleur.php?action=Inscription">
 					<div class="row uniform">
 						<div class="6u 12u$(xsmall)">
-							<input type="text" name="nom" id="nom" value="<?php echo $nom;?>" placeholder="Nom" />
+							<input type="text" name="nom" id="nom"  placeholder="Nom" />
 						</div>
 						<div class="6u 12u$(xsmall)">
-							<input type="text" name="prenom" id="prenom" value="<?php echo $prenom;?>" placeholder="Prenom" />
+							<input type="text" name="prenom" id="prenom"  placeholder="Prenom" />
 						</div>
 						<div class="6u$ 12u$(xsmall)">
-							<input type="text" name="login" id="login" value="<?php echo $login;?>" placeholder="Pseudo" />
+							<input type="text" name="pseudo" id="pseudo" placeholder="Pseudo" />
 						</div>
 						<div class="6u$ 12u$(xsmall)">
-							<input type="text" name="passe" id="passe" value="<?php echo $passe;?>" placeholder="Mot de passe" />
+							<input type="password" name="passe" id="passe" placeholder="Mot de passe" />
 						</div>
 						<div class="12u$">
 							<div class="select-wrapper">
-								<form action="controleur.php">
-									<select name="idQuestion" id="question">
+									<select name="idQuestion" id="idQuestion">
 										<option value="">- Question en cas d'oubli de mot de passe -</option>
 										<?php
 											$question = listerQuestions(); // Appel à listerQuestions dans modele.php
 											foreach ($question as $dataQuestion) {
 												echo "<option value=\"$dataQuestion[id]\">\n";
-												echo  $dataQuestion["label"];	
+												echo  $dataQuestion["label"];
 												echo "\n</option>\n"; 
 											}
 										?>
 									</select>
-								</form>
 							</div>
 						</div>
 						<div class="6u$ 12u$(xsmall)">
-							<input type="text" name="rep" id="rep" value="<?php echo $rep;?>" placeholder="Reponse" />
+							<input type="text" name="rep" id="rep" placeholder="Réponse" />
 						</div>
 						<div class="12u$">
 							<ul class="actions">

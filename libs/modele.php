@@ -17,10 +17,9 @@ function verifUserBdd($login,$passe) {
 }
 
 function mkUser($nom, $prenom, $pseudo, $passe, $idQuestion, $reponse) {
-
 	$SQL="INSERT INTO `users`(`nom`, `prenom`, `pseudo`, `passe`, `idQuestion`, `reponse`) VALUES (\"". $nom . "\",\"" . $prenom . "\",\"" . $pseudo . "\",\"" . $passe . "\",\"" . (int)$idQuestion . "\",\" ". $reponse . "\");";
 	SQLInsert($SQL);
-	// Cette fonction crée un nouvel utilisateur et renvoie l'identifiant de l'utilisateur créé
+	// Cette fonction crée un nouvel utilisateur et renvoie l'identifiant de l'utilisateur créé}
 }
 
 function connecterUtilisateur($idUser) {
@@ -28,6 +27,12 @@ function connecterUtilisateur($idUser) {
 	$SQL ="UPDATE users SET connecte=1 WHERE id='$idUser'";
 	SQLUpdate($SQL);
 }
+
+function listerInfosUtilisateur($login,$passe){
+	$SQL="SELECT * FROM users WHERE pseudo=\"" . $login . "\" AND passe=\"" . $passe . "\" AND connecte=1;";
+	return parcoursRs(SQLSelect($SQL));
+}
+
 
 function deconnecterUtilisateur($idUser) {
 	// cette fonction affecte le booléen "connecte" à faux pour l'utilisateur concerné 
@@ -113,6 +118,15 @@ function enregistrerProduit($idListe, $idAuteur, $quantite) {
 	$SQL="INSERT INTO `produits`(`idConversation`, `idAuteur`, `contenu`) VALUES ($idConversation ,$idAuteur ,'$contenu')";
 	return SQLInsert($SQL);
 }
+
+function listerProduitsFrigo($idListe) {
+	$SQL = "SELECT produitsliste.idProduitscatalogue, users.pseudo FROM produitsliste
+					INNER JOIN users ON listes.idAuteur = users.id
+					WHERE produitsliste.idListe = $idListe";
+	return parcoursRs(SQLSelect($SQL));
+	
+}
+
 
 function listerProduitsListe($idListe,$format="asso") {
 	$SQL = "SELECT produitsliste.idProduitscatalogue, users.pseudo FROM produitsliste

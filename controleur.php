@@ -34,8 +34,28 @@ session_start(); // On en a besoin pour utiliser la variable globale SESSION
 			break;
 
 			case 'Inscription' :
-				mkUser($_POST['nom'], $_POST['prenom'], $_POST['pseudo'], $_POST['passe'], $_POST['idQuestion'], $_POST['rep']);
-				$addArgs = "?view=login";
+				$SQL1="SELECT * FROM users";
+				$user=parcoursRs(SQLSelect($SQL1));
+				$valide=true;
+				if ($pseudo=valider("pseudo")){
+					if ($passe=valider("passe")){
+						foreach ($user as $dataUser){
+							if ($dataUser['pseudo'] == $pseudo) {
+								$valide=false;
+						}
+					}
+					if ($valide=true){
+						mkUser($_POST['nom'], $_POST['prenom'], $_POST['pseudo'], $_POST['passe'], $_POST['idQuestion'], $_POST['rep']);
+						setcookie("USERNAME","", time()-3600);
+						setcookie("PASSWORD","", time()-3600);
+						setcookie("REMEMBER",false, time()-3600);
+						$addArgs = "?view=listes";
+					}
+					else{
+						$addArgs = "?view=login";
+					}
+				}
+			}
 			break;
 
 			case 'Deconnexion' :
@@ -47,6 +67,25 @@ session_start(); // On en a besoin pour utiliser la variable globale SESSION
 			{
 				$this->foo = $foo;
 			}
+
+			case 'Catalogue' : 
+				if (isset ($_POST['nouveauProduit'])) {
+					ajouterProduitAuCatalogue($_POST['nouveauProduit'],$_POST['idCategorie']);
+				//echo $_POST['idCategorie'];
+								}
+				$addArgs = "?view=catalogue";
+			break;
+
+			case 'Profil' :
+				if (isset ($_POST['newPasse'])) {
+					$infosUser=listerInfosUtilisateur($login,$passe);
+					foreach ($infosUser as $infos){
+						$idUser=$infos['id'];
+					}
+					changerPasse($idUser,$_POST['newPasse']);
+				$addArgs = "?view=profil";
+			}
+			break;
 
 			case 'Activer' :
 			if ($idListe = valider("idListe")) {

@@ -22,48 +22,17 @@
 		<section class="wrapper style5">
 			<div class="inner">
 			<h3> Mon profil </h3>
-				<form id="cataProfil" action="index.php?view=profil" method="post">
-
-					<div class="row uniform">
-						<div class="6u 12u$(xsmall)">
-							<input type="text" name="nom" id="nom" placeholder="Nom" />
-						</div>
-						<div class="6u 12u$(xsmall)">
-							<input type="text" name="prenom" id="prenom"  value="<?php  ?>"placeholder="Prenom" />
-						</div>
-						<div class="6u$ 12u$(xsmall)">
-							<input type="text" name="login" id="login" value="<?php echo $login;?>" placeholder="Pseudo" />
-						</div>
-						<div class="6u$ 12u$(xsmall)">
-							<input type="password" name="passe" id="passe" placeholder="Mot de passe" />
-						</div>
-						<div class="12u$">
-							<div class="select-wrapper">
-								<form action="controleur.php">
-									<select name="idQuestion" id="question">
-										<option value="">- Question en cas d'oubli de mot de passe -</option>
-										<?php
-											$question = listerQuestions(); // Appel à listerQuestions dans modele.php
-											foreach ($question as $dataQuestion) {
-												echo "<option value=\"$dataQuestion[id]\">\n";
-												echo  $dataQuestion["label"];	
-												echo "\n</option>\n"; 
-											}
-										?>
-									</select>
-								</form>
-							</div>
-						</div>
-						<?php
-						$SQL="SELECT * FROM users WHERE pseudo=\"" . $login . "\" AND passe=\"" . $passe . "\";";
-		echo parcoursRs(SQLSelect($SQL));
-		?>
-
-					</div>
-					
-					<input type="submit" name="action" value="Modifier mon profil"  class="special" />
+			<form id="cataProfil" action="controleur.php?action=Profil" method="post">
+				<?php
+					$infosUser=listerInfosUtilisateur($login,$passe);
+					foreach ($infosUser as $infos){
+						echo 'Pseudo : <input style="width:250px;" type="text" name="login" id="login" value="' . $infos['pseudo'] . '" placeholder="Pseudo"/>';
+						echo 'Mot de passe : <input style="width:250px;" type="password" name="passe" id="passe" value="' . $infos['passe'] . '" placeholder="Mot de passe"/>';
+						echo 'Nouveau mot de passe : <input style="width:250px;" type="password" name="newPasse" id="newPasse" placeholder="Nouveau mot de passe"/>';
+					}
+				?>
+					<input style="float:right;" type="submit" name="action" value="Modifier mon profil"  class="special" />
 				</form>
-
 			</div>
 		</section>
 	</section>
