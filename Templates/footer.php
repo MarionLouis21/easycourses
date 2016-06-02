@@ -13,7 +13,7 @@
 			<li><a href="http://www.ig2i.fr/" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
 		</ul>
 		<ul class="copyright">
-			<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			<li>&copy; Easycourses</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 		</ul>
 		<?php
 			if (valider("connecte","SESSION")) {

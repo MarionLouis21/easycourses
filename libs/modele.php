@@ -28,8 +28,8 @@ function connecterUtilisateur($idUser) {
 	SQLUpdate($SQL);
 }
 
-function listerInfosUtilisateur($login,$passe){
-	$SQL="SELECT * FROM users WHERE pseudo=\"" . $login . "\" AND passe=\"" . $passe . "\" AND connecte=1;";
+function listerInfosUtilisateur($login){
+	$SQL="SELECT * FROM users WHERE pseudo=\"" . $login . "\" AND connecte=1;";
 	return parcoursRs(SQLSelect($SQL));
 }
 
@@ -42,7 +42,7 @@ function deconnecterUtilisateur($idUser) {
 
 function changerPasse($idUser,$passe) {
 	// cette fonction modifie le mot de passe d'un utilisateur
-	$SQL = "UPDATE users SET passe='$passe' WHERE id='$idUser'";
+	$SQL = "UPDATE users SET passe=\"" . $passe . "\" WHERE id=\"" . $idUser . "\"";
 	SQLUpdate($SQL);
 }
 

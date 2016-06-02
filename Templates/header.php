@@ -25,8 +25,8 @@
 <body>
 <div id="page-wrapper">
 	<!-- Header -->
-		<header id="header" class="alt">
-			<h1><a href="index.php">EasyCourses</a></h1>
+		<header id="header">
+			<h1>EasyCourses</h1>
 			<nav id="nav">
 				<ul>
 					<li class="special">
@@ -34,20 +34,20 @@
 						<div id="menu">
 							<ul>
 								<?php
-									if(!valider("connecte", "SESSION")) {			
+									if(!valider("connecte", "SESSION")) {	
+										echo "<li><a href='index.php'>Accueil</a></li>";		
 										echo "<li><a href='index.php?view=login'>Se connecter</a></li>";
 										echo "<li><a href='index.php?view=inscription'>S'inscrire</a></li>";
-										echo "<li><a href='index.php'>Accueil</a></li>";
+										echo "<li><a href='index.php?view=notreEcole'>Notre école</a></li>";
 									}
 									if(valider("connecte","SESSION")) {
 										echo "<li><a href='index.php?view=listes'>Mes Listes</a></li>";
 										echo "<li><a href='index.php?view=frigo'>Mon Frigo</a></li>";
-										echo "<li><a href='index.php?view=profil'>Mon Profil</a></li>";
 										echo "<li><a href='index.php?view=catalogue'>Catalogue</a></li>";
+										echo "<li><a href='index.php?view=profil'>Mon Profil</a></li>";
 										echo "<li><a href='controleur.php?action=Deconnexion'>Se déconnecter</a></li>";  // Aussi dans le footer
 									}
 								?>			
-								<li><a href="generic.php">Notre école</a></li>
 							</ul>
 						</div>
 					</li>

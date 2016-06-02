@@ -24,14 +24,14 @@
 			<h3> Mon profil </h3>
 			<form id="cataProfil" action="controleur.php?action=Profil" method="post">
 				<?php
-					$infosUser=listerInfosUtilisateur($login,$passe);
+					$infosUser=listerInfosUtilisateur($login);
 					foreach ($infosUser as $infos){
 						echo 'Pseudo : <input style="width:250px;" type="text" name="login" id="login" value="' . $infos['pseudo'] . '" placeholder="Pseudo"/>';
 						echo 'Mot de passe : <input style="width:250px;" type="password" name="passe" id="passe" value="' . $infos['passe'] . '" placeholder="Mot de passe"/>';
 						echo 'Nouveau mot de passe : <input style="width:250px;" type="password" name="newPasse" id="newPasse" placeholder="Nouveau mot de passe"/>';
 					}
 				?>
-					<input style="float:right;" type="submit" name="action" value="Modifier mon profil"  class="special" />
+					<input style="float:right;" type="submit" value="Modifier mon profil"  class="special" />
 				</form>
 			</div>
 		</section>

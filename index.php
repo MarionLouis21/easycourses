@@ -51,6 +51,10 @@ session_start(); // A mettre dans l'index car l'index est le fichier de base, ç
 				include 'Templates/inscription.php';
 			break;
 
+			case 'notreEcole':
+				include 'Templates/notreEcole.php';
+			break;
+
 			default :
 				include 'Templates/accueil.php';
 			break;
