@@ -35,6 +35,7 @@
 							</div>
 						</div>
 					</form>
+					<a href='index.php?view=mdpOublie'>Mot de passe oublié</a>
 			</section>
 		</div>
 	</section>

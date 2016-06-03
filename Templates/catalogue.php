@@ -7,7 +7,7 @@
 
 	// Si la page est appelée directement par son adresse, on redirige en passant pas la page index
 	if (basename($_SERVER["PHP_SELF"]) != "index.php") {
-		header("Location:../index.php?view=frigo.php");
+		header("Location:../index.php?view=catalogue.php");
 		die("");
 	}
 	// include_once("libs/modele.php");
@@ -20,6 +20,29 @@
 			<div class="inner">
 				<h3>Catalogue</h3>
 				<form id="cataForm" action="index.php?view=catalogue" method="post">
+				<?php  // Mettre avant le formulaire pour afficher le nouveau produit dès qu'on appuie sur le bouton
+							$absent=true;
+							if (isset($_POST['nouveauProduit'])) {
+								if (isset($_POST['idCategorie'])) {
+									$SQL = "SELECT * FROM catalogue WHERE idCategorie=\"" . $_POST['idCategorie'] . " \"";		
+									$produit = parcoursRs(SQLSelect($SQL));
+									foreach ($produit as $dataProduit) {
+									//	var_dump($dataProduit['nom'], $_POST['nouveauProduit']);
+										if ($dataProduit['nom'] == $_POST['nouveauProduit']) {
+											$absent=false;
+										}
+									}
+									//var_dump($absent);
+									//die();
+
+									if (($_POST['nouveauProduit']!="") && $absent) {
+										ajouterProduitAuCatalogue($_POST['nouveauProduit'],$_POST['idCategorie']);
+										//echo $_POST['idCategorie']; 
+									}
+								}
+							}
+						?>
+
 					<select id="selectCategories" name="idCategorie" style="width:300px;">
 						<option value="">- Catégorie -</option>
 						<?php
@@ -33,9 +56,6 @@
 						?>
 					</select>
 						<?php
-						/*	if $_POST['idCategorie']=""{
-								echo "<h6> Sélectionner une catégorie </h6>";
-							}*/
 							if (isset ($_POST['idCategorie'])) {
 								$produit = listerProduits($_POST['idCategorie']);
 
@@ -46,21 +66,12 @@
 								echo('</ul>');
 							}
 						?>
-					
 							<h5> Ajouter un produit à la catégorie </h5>
 							<div class="6u$ 12u$(xsmall)">
 								<input type="text" name="nouveauProduit" id="nouveauProduit" placeholder ="Produit"/>
 								<input type="submit" name="action" value="Ajouter"  class="special" style="float:right;" />
 
-						<?php
-							if (isset ($_POST['nouveauProduit'])) {
-								ajouterProduitAuCatalogue($_POST['nouveauProduit'],$_POST['idCategorie']);
-								echo $_POST['idCategorie']; // Affiche n'importe quoi
-
-							}
-
-
-						?>
+						
 						</div>
 				</form>
 

@@ -56,7 +56,40 @@ session_start(); // On en a besoin pour utiliser la variable globale SESSION
 				break;
 				}
 				}
-				break;
+			break;
+
+
+			case 'mdpOublie':
+				$SQL="SELECT * FROM users";
+				$user=parcoursRs(SQLSelect($SQL));
+				foreach ($user as $dataUser) {
+					if ($dataUser['pseudo'] == $_POST['pseudo']){
+						$id=$dataUser['id'];
+					}
+				}
+				$SQL1="SELECT * FROM users WHERE id=\" " . $id . "\"";
+				$user1=parcoursRs(SQLSelect($SQL1));
+				foreach ($user1 as $dataUser1) {
+					if (($dataUser1['pseudo'] == $_POST['pseudo']) && ($dataUser1['idQuestion'] == $_POST['idQuestion']) && ($dataUser1['reponse'] == $_POST['rep'])){
+							$_SESSION['id'] = $dataUser1['id'];
+							$addArgs = "?view=nouveauPasse";
+							//echo "<script> alert(\" Votre mot de passe est \") </script>";
+					}
+					else {
+						$addArgs="?view=inscription";
+					}
+				}
+			break;
+
+			case 'ReinitMdp':
+				$SQL="SELECT * FROM users WHERE id=\"" . $_SESSION['id'] . "\"";
+				$user = parcoursRs(SQLSelect($SQL));
+				foreach ($user as $dataUser) {
+					changerPasse($_SESSION['id'],$_POST['nouveauPasse']);
+				}
+				$addArgs="?view=login";
+			break;
+
 
 
 			case 'Deconnexion' :
@@ -68,15 +101,6 @@ session_start(); // On en a besoin pour utiliser la variable globale SESSION
 			{
 				$this->foo = $foo;
 			}
-
-			case 'Catalogue' : 
-
-					if (isset ($_POST['nouveauProduit'])) {
-						ajouterProduitAuCatalogue($_POST['nouveauProduit'],$_POST['idCategorie']);
-						//echo $_POST['idCategorie']; 
-					}
-				$addArgs = "?view=catalogue";
-			break;
 
 			case 'Profil' :
 				if (isset ($_POST['newPasse'])) {

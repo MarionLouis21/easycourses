@@ -55,6 +55,14 @@ session_start(); // A mettre dans l'index car l'index est le fichier de base, ç
 				include 'Templates/notreEcole.php';
 			break;
 
+			case 'mdpOublie':
+				include 'Templates/mdpOublie.php';
+			break;
+
+			case 'nouveauPasse':
+				include 'Templates/nouveauPasse.php';
+			break;
+
 			default :
 				include 'Templates/accueil.php';
 			break;

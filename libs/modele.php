@@ -66,7 +66,7 @@ function listerCategories()
 
 function listerProduits($idCat = 0)
 {
-	$str="SELECT * FROM catalogue WHERE idCategorie= " . (int)$idCat . " ORDER BY nom"; 
+	$str="SELECT * FROM catalogue WHERE idCategorie= " . (int)$idCat . " ORDER BY nom ASC"; 
 	//$str="SELECT * FROM catalogue WHERE idCategorie='$idCat' ORDER BY nom"; 
 	return parcoursRs(SQLSelect($str));
 }
@@ -74,7 +74,7 @@ function listerProduits($idCat = 0)
 
 function ajouterProduitAuCatalogue($nom,$idCategorie)
 {
-	$SQL="INSERT INTO catalogue (nom,idCategorie) VALUES (\" " . $nom . "\",\"" . $idCategorie . "\");";
+	$SQL="INSERT INTO catalogue (nom,idCategorie) VALUES (\"" . $nom . "\",\"" . $idCategorie . "\");";
 	SQLInsert($SQL);
 }
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Sam 21 Mai 2016 à 14:51
+-- Généré le :  Ven 03 Juin 2016 à 09:20
 -- Version du serveur :  5.7.9
 -- Version de PHP :  7.0.0
 
@@ -29,30 +29,46 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `catalogue`;
 CREATE TABLE IF NOT EXISTS `catalogue` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'identifiant du produit du catalogue',
-  `nom` varchar(20) NOT NULL COMMENT 'nom du produit',
+  `nom` varchar(25) NOT NULL COMMENT 'nom du produit',
   `idCategorie` int(11) NOT NULL COMMENT 'id de la categorie, clé etrangere',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `catalogue`
 --
 
 INSERT INTO `catalogue` (`id`, `nom`, `idCategorie`) VALUES
-(1, 'Tomates', 1),
-(2, 'Pommes', 1),
-(3, 'Steak haché', 2),
-(4, 'Poulet', 2),
-(5, 'Lait', 3),
-(6, 'Yaourt', 3),
-(7, 'Abricot', 1),
-(8, 'Fraises', 1),
 (15, ' Poire', 1),
 (19, ' Pain', 5),
 (23, ' Jus d''orange', 4),
-(25, ' Boeuf ', 2),
-(31, ' ', 4),
-(32, ' Coca', 4);
+(25, ' Boeuf', 2),
+(32, ' Coca', 4),
+(37, ' Poireau', 1),
+(41, ' Pommes de terre', 1),
+(44, ' Jus de pomme', 4),
+(60, ' Melon', 1),
+(61, ' Eau', 4),
+(68, ' Saucisse', 2),
+(75, ' Limonade', 4),
+(82, ' Fromage blanc', 3),
+(87, ' Framboise', 1),
+(88, ' Ice Tea', 4),
+(89, ' Abricot', 1),
+(90, ' Fraises', 1),
+(94, ' Raisin', 1),
+(95, ' Pommes', 1),
+(96, ' Tomates', 1),
+(97, ' Steack haché', 2),
+(98, ' Poulet', 2),
+(99, ' Bière', 4),
+(100, ' Bière', 4),
+(101, ' Lait', 3),
+(102, ' Yaourt', 3),
+(103, ' Crème fraîche', 3),
+(104, ' Kiwis', 1),
+(105, ' Pastèque', 1),
+(106, ' Gruyère', 3);
 
 -- --------------------------------------------------------
 
@@ -91,7 +107,14 @@ CREATE TABLE IF NOT EXISTS `listes` (
   `complete` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'indique si la liste est complete',
   `idAuteur` int(11) NOT NULL COMMENT 'id de users, clé etrangere',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `listes`
+--
+
+INSERT INTO `listes` (`id`, `nom`, `complete`, `idAuteur`) VALUES
+(1, 'Liste1', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -102,9 +125,9 @@ CREATE TABLE IF NOT EXISTS `listes` (
 DROP TABLE IF EXISTS `produitsfrigo`;
 CREATE TABLE IF NOT EXISTS `produitsfrigo` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'identifiant du produit du frigo',
-  `idProduitsliste` int(11) NOT NULL COMMENT 'id du produit dans la liste, clé etrangere',
+  `idProduitsliste` int(11) DEFAULT NULL COMMENT 'id du produit dans la liste, clé etrangere',
   `quantite` int(50) DEFAULT NULL COMMENT 'quantite du produit',
-  `idProduitscatalogue` int(11) NOT NULL COMMENT 'id de produitscatalogue, clé etrangere',
+  `idProduitscatalogue` int(11) DEFAULT NULL COMMENT 'id de produitscatalogue, clé etrangere',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -163,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `reponse` varchar(30) NOT NULL COMMENT 'reponse a la question',
   `connecte` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'indique si l''utilisateur est connecte',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `users`
@@ -171,7 +194,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `nom`, `prenom`, `pseudo`, `passe`, `idQuestion`, `reponse`, `connecte`) VALUES
 (3, 'Louis', 'Marion', 'marion', 'Alexis', 1, 'Vanderdonckt', 1),
-(4, 'Mollin', 'Cassandra', 'cassou', 'Quentin', 1, 'Missana', 0);
+(4, 'Mollin', 'Cassandra', 'cassou', 'Quentin', 1, 'Missana', 0),
+(6, 'test2nom', 'test2prenom', 'test2pseudo', 'test2passe', 1, ' test', 0),
+(7, 'Boulongne', 'Alexis', 'Rabatsenberg', 'JesuisUnNounours', 2, ' Pedro', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
